@@ -1,10 +1,24 @@
-import React from "react";
+import React, { useContext } from "react";
 import classes from "./MealItem.module.css";
 import MealtemForm from "./MealItemForm";
+import CartContext from "../../../store/cart-context";
 
 const MealItem = props => {
+  //to coonctin ot contect
+  const cartCtx = useContext(CartContext);
+
   const price = `$${props.price.toFixed(2)}`;
   //${} to inject dynami content
+
+  const addToCartHandler = amount => {
+    debugger;
+    cartCtx.addItem({
+      id: props.id,
+      name: props.name,
+      amount: amount,
+      price: props.price
+    });
+  };
   return (
     <li className={classes.meal}>
       <div>
@@ -13,7 +27,7 @@ const MealItem = props => {
         <div>{price}</div>
       </div>
       <div>
-        <MealtemForm />
+        <MealtemForm onAddToCart={addToCartHandler} />
       </div>
     </li>
   );
